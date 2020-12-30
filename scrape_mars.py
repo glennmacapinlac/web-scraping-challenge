@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[21]:
 
 
-#get_ipython().system('pip install splinter')
 
 
-# In[88]:
+
+
+# In[1]:
 
 
 from bs4 import BeautifulSoup as bs
@@ -20,13 +20,13 @@ import pandas as pd
 import json
 
 
-# In[41]:
+# In[2]:
 
 executable_path = {'executable_path': 'chromedriver'}
 browser = Browser('chrome', **executable_path, headless=False)
 
 
-# In[61]:
+# In[3]:
 
 
 url = 'https://mars.nasa.gov/news/'
@@ -34,34 +34,34 @@ browser.visit(url)
 html = browser.html
 
 
-# In[62]:
+# In[4]:
 
 
 soup = bs(html, 'html.parser')
 print(soup.prettify())
 
 
-# In[63]:
+# In[5]:
 
 
 content=soup.find("div",class_="content_page")
 
 
-# In[64]:
+# In[6]:
 
 
 title= content.find_all("div",class_="content_title")
 print(title[0].text.strip())
 
 
-# In[65]:
+# In[7]:
 
 
 article= soup.find_all("div",class_="article_teaser_body")
 print(article[0].text.strip())
 
 
-# In[67]:
+# In[8]:
 
 
 url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
@@ -69,66 +69,66 @@ browser.visit(url)
 html= browser.html
 
 
-# In[72]:
+# In[9]:
 
 
 soup=bs(html,"html.parser")
 featured_image= soup.find("article", class_="carousel_item")["style"]
 
 
-# In[83]:
+# In[10]:
 
 
 latter= featured_image.split('/spaceimages/')[1].split("'")[0]
 
 
-# In[84]:
+# In[11]:
 
 
 former=url.split("?")[0]
 
 
-# In[85]:
+# In[12]:
 
 
 featured_image_url= former + latter
 featured_image_url
 
 
-# In[86]:
+# In[13]:
 
 
 facturl= 'https://space-facts.com/mars/'
 
 
-# In[91]:
+# In[14]:
 
 
 table=pd.read_html(facturl)
 table[0]
 
 
-# In[92]:
+# In[15]:
 
 
 mars_df = table[0]
 
 
-# In[93]:
+# In[16]:
 
 
 mars_fact_html = mars_df.to_html(header=False, index=False)
 mars_fact_html
 
 
-# In[108]:
+# In[17]:
 
 
 url="https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
 browser.visit(url)
 
 
-# In[113]:
+# In[18]:
 
 
 hemisphere_image_urls = []
@@ -154,7 +154,7 @@ hemisphere_image_urls.append(hemisphere)
 browser.back()
 
 
-# In[114]:
+# In[19]:
 
 
 hemisphere_image_urls
